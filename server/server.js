@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 // Route includes
 const favoriteRouter = require('./routes/favorite.router');
 const categoryRouter = require('./routes/category.router');
+const searchRouter = require('./routes/search.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('build'));
 
 /* Routes */
+app.use('/api/search', searchRouter);
 app.use('/api/favorite', favoriteRouter);
 app.use('/api/category', categoryRouter);
 
