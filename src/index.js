@@ -13,17 +13,19 @@ import axios from 'axios';
 
 
 
-
-
 function* rootSaga(){
 yield takeEvery ('FETCH_GIF', fetchGifs)
 }
 
-function* fetchGifs(){
-    const gifDisplay = yield axios.get('/');
-    console.log('in gif display:', gifDisplay);
-    yield put({type:'GET_GIF'})
+function* fetchGifs(action){
+    const serachResults = yield axios.get(`/api/search/${action.payload}`)
+    console.log('in fetchGifs', serachResults);
+    console.log('payload', serachResults.data.data);
+    
+    yield put({ type: 'GET_GIF', payload: serachResults.data.data})
 }
+
+
 
 const gifReducer = (state=[], action) =>{
     switch(action.type){

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import axios from 'axios';
-
 
 class Search extends Component {
 
@@ -12,14 +12,16 @@ class Search extends Component {
     let searchString=this.state.searchInput;
     console.log(`gonna search for ${searchString}`);
 
-    axios({
-      method: 'GET',
-      url: '/api/search'
-    }).then((response)=> {
-      console.log('this is the client side: ', response.data.data)
-    }).catch((error) => {
-      console.log(error);
-    })//end axios
+    this.props.dispatch({type: 'FETCH_GIF', payload: searchString})
+
+    // axios({
+    //   method: 'GET',
+    //   url: '/api/search'
+    // }).then((response)=> {
+    //   console.log('this is the client side: ', response.data.data)
+    // }).catch((error) => {
+    //   console.log('client', error);
+    // })//end axios
   }
 
   trackSearchInput=(event)=>{
@@ -33,11 +35,11 @@ class Search extends Component {
       <div className="Search">
         <input type="text" onChange={this.trackSearchInput} placeholder="what would you like to see?" value={this.state.searchInput}/>
         <button onClick={this.search}>send search</button>
-     
       </div>
     );
   }
-  
 }
-
-export default Search;
+const getStore = reduxState => ({
+  reduxState
+});
+export default connect(getStore)(Search);
