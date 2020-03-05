@@ -10,15 +10,19 @@ import createSagaMiddleware from 'redux-saga';
 import {takeEvery, put} from 'redux-saga/effects';
 import axios from 'axios';
 
-
-
 function* rootSaga(){
 yield takeEvery ('FETCH_GIF', fetchGifs)
 }
 
-function* fetchGifs(){
-    const gifDisplay = yield axios.get('/')
+function* fetchGifs(action){
+    const serachResults = yield axios.get(`/api/search/${action.payload}`)
+    console.log('in fetchGifs', serachResults);
+    console.log('payload', serachResults.data.data);
+    
+    yield put({ type: 'GET_GIF', payload: serachResults.data.data})
 }
+
+
 
 const gifReducer = (state=[], action) =>{
     switch(action.type){
