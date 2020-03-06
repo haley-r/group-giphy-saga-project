@@ -2,16 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 class Search extends Component {
-
   state = {
-    searchInput: ''
-  }
+    searchInput: ""
+  };
 
-  search=()=> {
-    let searchString=this.state.searchInput;
+  search = () => {
+    let searchString = this.state.searchInput;
     console.log(`gonna search for ${searchString}`);
 
-    this.props.dispatch({type: 'FETCH_GIF', payload: searchString})
+    this.props.dispatch({ type: "FETCH_GIF", payload: searchString });
 
     // axios({
     //   method: 'GET',
@@ -21,29 +20,43 @@ class Search extends Component {
     // }).catch((error) => {
     //   console.log('client', error);
     // })//end axios
-  }
+  };
 
-  trackSearchInput=(event)=>{
+  trackSearchInput = event => {
     this.setState({
       searchInput: event.target.value
-    })
+    });
+  };
+
+  favoriteGif = (event) => {
+    console.log('clicked favorite button', event.target.id);
+    this.props.dispatch({ type: 'FAVORITE_GIF', payload: event.target.id})
   }
 
   render() {
     return (
       <div className="Search">
-        <input type="text" onChange={this.trackSearchInput} placeholder="what would you like to see?" value={this.state.searchInput}/>
+        <input
+          type="text"
+          onChange={this.trackSearchInput}
+          placeholder="what would you like to see?"
+          value={this.state.searchInput}
+        />
         <button onClick={this.search}>send search</button>
-        {this.props.reduxState.gifReducer &&
-        <ul className="searchResults"> 
-          {this.props.reduxState.gifReducer.map(result => (
-            <li key={result.id}><img height="100px" src={result.images.original.url} alt="search result"/>
-            <button>like</button></li>
-            
-          ))}
-            
-        </ul>
-  }
+        {this.props.reduxState.gifReducer && (
+          <ul className="searchResults">
+            {this.props.reduxState.gifReducer.map(result => (
+              <li key={result.id}>
+                <img
+                  height="100px"
+                  src={result.images.original.url}
+                  alt="search result"
+                />
+                <button id={result.images.original.url} onClick={this.favoriteGif}>like</button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     );
   }
