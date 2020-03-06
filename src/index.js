@@ -9,6 +9,9 @@ import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import {takeEvery, put} from 'redux-saga/effects';
 import axios from 'axios';
+// import { response } from 'express';
+
+
 
 function* rootSaga(){
 yield takeEvery ('FETCH_GIF', fetchGifs)
