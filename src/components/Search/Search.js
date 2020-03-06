@@ -38,7 +38,9 @@ class Search extends Component {
         {this.props.reduxState.gifReducer &&
         <ul className="searchResults"> 
           {this.props.reduxState.gifReducer.map(result => (
-            <li key={result.id}><img height="100px" src={result.images.original.url} alt="search result"/></li>
+            <li key={result.id}><img height="100px" src={result.images.original.url} alt="search result"/>
+            <button>like</button></li>
+            
           ))}
             
         </ul>
