@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from 'axios';
+
 
 class Search extends Component {
 
@@ -35,6 +35,14 @@ class Search extends Component {
       <div className="Search">
         <input type="text" onChange={this.trackSearchInput} placeholder="what would you like to see?" value={this.state.searchInput}/>
         <button onClick={this.search}>send search</button>
+        {this.props.reduxState.gifReducer &&
+        <ul className="searchResults"> 
+          {this.props.reduxState.gifReducer.map(result => (
+            <li key={result.id}><img height="100px" src={result.images.original.url} alt="search result"/></li>
+          ))}
+            
+        </ul>
+  }
       </div>
     );
   }
@@ -42,4 +50,5 @@ class Search extends Component {
 const getStore = reduxState => ({
   reduxState
 });
+
 export default connect(getStore)(Search);
